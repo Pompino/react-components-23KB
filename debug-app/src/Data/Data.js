@@ -11,7 +11,7 @@ const Persons = [
         "Katedra": "Katedra kybernetické bezpečnosti a informatiky",
         "Fakulta": "FVT",
         "Obor": "Kybernetická bezpečnost",
-        "Rota": "5",
+        "Rota": "5", 
         "Ceta": "7",
         "Telefon": "",
         "Email": "edita.bozkova@unob.cz",
@@ -20,5 +20,19 @@ const Persons = [
         "Garant": "235669"
     }
 ]
+
+const = [
+    {
+
+    }
+]
+
+
+const Persons = [
+    {
+        
+    }
+]
+
 
 const 
