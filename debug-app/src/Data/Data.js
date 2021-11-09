@@ -21,18 +21,22 @@ const Persons = [
     }
 ]
 
-const = [
+const Teachers = [
     {
 
     }
 ]
 
 
-const Persons = [
+const Department = [
     {
         
     }
 ]
 
 
-const 
+const StudyGroup = [
+    {
+        
+    }
+]
