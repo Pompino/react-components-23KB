@@ -18,7 +18,7 @@ ________________________________________________________________________________
 		- Správné propojení a uspořádání komponent Small/Medium/Large
 		- Definovat dockerfile
 		
-14.11.2021 Dokončení grafického návrhu jednotlivých komponent
+14.11.2021 Dokončení grafického návrhu jednotlivých komponent  
 28.11.2021 Zahájení činnosti na vytvoření pomocné API  
 12.11.2021 Conteinerizace v dockeru hotová  
 15.12.2021 Verze Alfa  
