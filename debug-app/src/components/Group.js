@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import { Row } from "react-bootstrap";
 
 export function GroupS(props) {
-    const url='/ui/group/m/'+props.id;
+    const url='/ui/group/'+props.id;
     return (
         <Link to={url}>{props.name}</Link>
     )

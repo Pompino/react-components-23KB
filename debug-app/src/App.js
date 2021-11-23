@@ -1,6 +1,6 @@
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
   useParams
 } from "react-router-dom";
@@ -15,34 +15,29 @@ import {
   GroupS
 } from "./components/Group";
 
+import Home from "./Home";
+import Prehled from "./Prehled";
+
 function Separate() {
   const {id}=useParams();
-  const {size}=useParams();
   const {type}=useParams();
 
   if(type==='person') {
-    if(size==='m') 
-      return (<PersonM id={id} name={'Stredni'} lastname={'Osoba'}/>)
-    else if(size==='s') 
-      return (<PersonS id={id} name={'Malej'} lastname={'Pan'}/>)
+    return (<PersonM id={id} name={'Stredni'} lastname={'Osoba'}/>)
   }
   else if(type==='group') {
-    if(size==='s') 
-      return (<GroupS id={id} name={'23/5KB'}/>)
-    else if(size==='m')
-      return (<GroupM id={id} name={'23/5KB'}/>)
+    return (<GroupM id={id} name={'23/5KB'}/>)
   }
-
 }
 
 export default function App(props) {
   return (
     <Router>
-      <Switch>
-        <Route path={props.appRoot+'/:type/:size/:id'}>
-          <Separate />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path={props.appRoot+'/home'} element={<Home appRoot={props.appRoot}/>} />
+        <Route path={props.appRoot+'/:type/:id'} element={<Separate />} />
+        <Route path={props.appRoot+'/prehled'} element={<Prehled />} />
+      </Routes>
     </Router>
   );
 }

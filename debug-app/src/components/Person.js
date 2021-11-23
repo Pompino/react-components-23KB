@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import { Row } from "react-bootstrap";
 
 export function PersonS(props) {
-    const url='/ui/person/m/'+ props.id;
+    const url='/ui/person/'+props.id;
     return (
         <Link to={url}>{props.name} {props.lastname}</Link>
     )
