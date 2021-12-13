@@ -12,14 +12,23 @@ export function GroupS(props) {
 export function GroupM(props) {
     return (
         <Card>
+            <Card.Header>
+                <Card.Title><GroupS {...props}/></Card.Title>
+            </Card.Header>
             <Card.Body>
-                <Card.Title><GroupS id={props.id} name={props.name}/></Card.Title>
-                <Card.Text>
-                    <Row>Jmeno:     Prijmeni:   </Row>
-                    <Row>Titul:     Rocnik:     Skupina:    </Row>
-                    <Row>E-mail: Telefon: </Row>
-                </Card.Text>
+                Jmeno:     Prijmeni:<br/>
+                Titul:     Rocnik:     Skupina:<br/>
+                E-mail: Telefon:
             </Card.Body>
         </Card>
+    )
+}
+
+export function GroupL(props) {
+
+    return (
+        <div>
+            work in progress...
+        </div>
     )
 }
