@@ -10,14 +10,12 @@ export function DepartmentS (props) {
 
 export function DepartmentM (props) {
     return (
-        <Card>
+        <Card className='mb-3'>
+            <Card.Header>
+                <Card.Title>Katedra <DepartmentS {...props} />, ID:{props.id}</Card.Title>
+            </Card.Header>
             <Card.Body>
-                <Card.Header>
-                    <Card.Title>Katedra <DepartmentS {...props} />, ID:{props.id}</Card.Title>
-                </Card.Header>
-                <Card.Text>
-                    Doplnit ... 
-                </Card.Text>
+                Doplnit ... 
             </Card.Body>
         </Card> 
     )

@@ -5,62 +5,54 @@ import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 import image from './rozvrhSnimek.png'
-import { PersonS } from "./Person";
-import { GroupS } from "../group/Group";
 import { DepartmentS } from "../department/Department";
 
-export function StudentS(props) {
+export function TeacherS(props) {
     return (
-        <Link to={props.appRoot+"/student/"+(props.id+1)}>{props.name} {props.lastname}</Link>
+        <Link to={props.appRoot+"/teacher/"+(props.id+1)}>{props.name} {props.lastname}</Link>
     )
 }
 
-export function StudentM(props) {
+export function TeacherM(props) {
     return (
         <div class="card mb-3">
             <Card.Header>
-                <Card.Title>Student - <StudentS {...props} /></Card.Title>
+                <Card.Title>Vyučující - <TeacherS {...props} /></Card.Title>
             </Card.Header>
             <Card.Body>
                 <Card.Text>
                     <b>Jméno příjmení:</b> {props.name} {props.lastname}<br/>
-                    <b>Titul:</b> {props.degreeRank ? props.degreeRank : 'mgr. npor.'} <b>Ročník:</b> {props.grade ? props.grade : '0'} <br/>
-                    <b>Skupina:</b> {props.group ? props.group : <Link to={'404'}>21-5KB</Link>}<br/>
-                    <b>Fakulta:</b> {props.faculties ? props.faculties : <Link to={'404'}>FVZ</Link>}
+                    <b>Titul:</b> {props.degreeRank ? props.degreeRank : 'mgr. npor.'}<br/>
+                    <b>Katedra:</b> {props.departments ? props.departments : <Link to={'404'}>K-209</Link>}<br/>
+                    <b>Fakulta:</b> {props.faculty ? props.faculty : <Link to={'404'}>FVZ</Link>}
                 </Card.Text>
             </Card.Body>
         </div>
     )
 }
 
-export function StudentL(props) {
+export function TeacherL(props) {
     const [state, setState] = useState(
         {
             'id': props.id,
             'name': props.name,
             'lastname': props.lastname,
-            'degreeRank': 'ing. por.',
-            'grade': '3',
-            "email": props.name.toLowerCase()+'.'+props.lastname.toLowerCase()+'@unob.cz',
-            'phone': '720 525 980',
-            'areal': 'Kasárny Černá Pole',
-            'building': '3',
-            'room': '422',
-            'VR': 'def',
-            'VC': 'def',
-            'VK': 'def',
+            'degreeRank': 'ing. plk.',
+            "email": props.name.toLowerCase()+'.'+props.lastname.toLowerCase()+'1@unob.cz',
+            'phone': '973 274 160',
+            'areal': 'Kasárny Šumavská',
+            'building': '5',
+            'room': '104',
             'faculty': [
                 {'id': 23, 'name': 'FVT'}
             ],
-            'groups': [
-                {'id': 21, 'name': '23-5KB'},
-                {'id': 22, 'name': '24-5KB'}
+            'departments': [
+                {'id': 1, 'name': 'K-209'},
+                {'id': 2, 'name': 'K-207'}
             ],
             'subjects': [
                 {'id': 25, 'name': 'Informatika'},
                 {'id': 1, 'name': 'Analýza informačních zdrojů'},
-                {'id': 3, 'name': 'Anglický jazyk'},
-                {'id': 2, 'name': 'Tělesná výchova'},
                 {'id': 4, 'name': 'Kybernetická bezpečnost'},
                 {'id': 5, 'name': 'Počítačové sítě a jejich bezpečnost'}
             ]
@@ -68,7 +60,7 @@ export function StudentL(props) {
     )
 
     useEffect(()=>{
-        fetch('/api/getStudent/', {
+        fetch('/api/getTeacher/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -80,13 +72,18 @@ export function StudentL(props) {
                     user(id: $id$) {
                         id
                         name
-                        surname
-                        fullname
+                        lastname
+                        degreeRank
+                        email
+                        phone
+                        areal
+                        building
+                        room
                         faculty: groupsByType(type: 0) {
                             id
                             name
                         }
-                        groups: groupsByType(type: 1) {
+                        departments: groupsByType(type: 1) {
                             id
                             name
                         }
@@ -111,18 +108,13 @@ export function StudentL(props) {
         subjects.push(<li><Link to={'404'}>{sgItem.name}</Link></li>);
     }
 
-    const groups = []
-    for(index = 0; index < state.groups.length; index++) {
-        if(index>0) groups.push(', ')
-        const sgItem = state.groups[index]
-        groups.push(<GroupS {...props} id={sgItem.id} name={sgItem.name} />);
-    }
-
-    const faculties = []
-    for(index = 0; index < state.faculty.length; index++) {
-        if(index>0) faculties.push(', ')
-        const sgItem = state.faculty[index]
-        faculties.push(<DepartmentS {...props} id={sgItem.id} name={sgItem.name} />);
+    const departments = []
+    for(index = 0; index < state.departments.length; index++) {
+        if(index>0) {
+            departments.push(', ');
+        }
+        const sgItem = state.departments[index]
+        departments.push(<DepartmentS {...props} id={sgItem.id} name={sgItem.name} />);
     }
 
     return (
@@ -130,11 +122,10 @@ export function StudentL(props) {
             <div class="card-header mb-3">
                 <h4>Karta uživatele</h4>
             </div>
-
             <Row>
                 <div class="col-3">
-                    <StudentM {...props} degreeRank={state.degreeRank} grade={state.grade} group={groups} faculties={faculties}/>
-                    <ContactInfo data={state} appRoot={props.appRoot}/>
+                    <TeacherM {...props} degreeRank={state.degreeRank} departments={departments}/>
+                    <ContactInfo data={state}/>
                 </div>
                 <div class="col-6">
                     <RozvrhM />
@@ -151,7 +142,7 @@ function RozvrhM() {
     return (
         <Card>
             <Card.Header>
-                <Card.Title>Týdenní rozvrh</Card.Title>
+                <Card.Title>Rozvrh tento týden</Card.Title>
             </Card.Header>
             <Card.Body>
                 <img src={image} alt="Rozvrh" width={'100%'}/>
@@ -172,14 +163,6 @@ function ContactInfo(props) {
                 <b>Telefon:</b> {props.data.phone ? props.data.phone : 'Neuvedeno'}<br />
                 <b>Areál: </b> {props.data.areal}<br />
                 <b>Budova: </b>{props.data.building} <b>Místnost:</b> {props.data.room}<br />
-            </Card.Body>
-            <Card.Header>
-                Nadřízení
-            </Card.Header>
-            <Card.Body>
-                <b>Velitel roty:</b> <PersonS id={23} name='Stanislav' lastname='Dobrušák' appRoot={props.appRoot}/><br />
-                <b>Velitel čety:</b> <PersonS id={28} name='Pavel' lastname='Rajská' appRoot={props.appRoot}/><br />
-                <b>Vedoucí katedry:</b> <PersonS id={21} name='František' lastname='Petr' appRoot={props.appRoot}/><br />
             </Card.Body>
         </div>
     )

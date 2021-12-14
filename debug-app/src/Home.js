@@ -13,9 +13,10 @@ export default function Home(props) {
             <Container>
                 <ul className="list-group">
                     <li className="list-group-item"><h5>Přehled <b>MEDIUM </b>komponent <a href={props.appRoot+"/prehled"} className="btn btn-primary float-right">Link</a></h5></li>
-                    <li className="list-group-item"><h5>Osoba <b>LARGE </b>komponenta <a href={props.appRoot+"/person/23"} className="btn btn-primary float-right" title="Prozatím pouze MEDIUM">Link</a></h5></li>
-                    <li className="list-group-item"><h5>Skupina <b>LARGE </b>komponenta <a href={props.appRoot+"/group/65"} className="btn btn-primary float-right" title="Prozatím pouze MEDIUM">Link</a></h5></li>
-                    <li className="list-group-item"><h5>Katedra <b>LARGE </b>komponenta <a href={props.appRoot+"/department/642"} className="btn btn-primary float-right" title="Prozatím pouze MEDIUM">Link</a></h5></li>
+                    <li className="list-group-item"><h5>Učitel <b>LARGE </b>komponenta <a href={props.appRoot+"/teacher/23"} className="btn btn-primary float-right">Link</a></h5></li>
+                    <li className="list-group-item"><h5>Student <b>LARGE </b>komponenta <a href={props.appRoot+"/student/23"} className="btn btn-primary float-right">Link</a></h5></li>
+                    <li className="list-group-item"><h5>Skupina <b>LARGE </b>komponenta <a href={props.appRoot+"/group/65"} className="btn btn-primary float-right">Link</a></h5></li>
+                    <li className="list-group-item"><h5>Katedra <b>LARGE </b>komponenta <a href={props.appRoot+"/department/642"} className="btn btn-primary float-right">Link</a></h5></li>
                 </ul>
             </Container>
             <hr />
