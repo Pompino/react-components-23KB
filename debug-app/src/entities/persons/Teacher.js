@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Card from 'react-bootstrap/Card';
-import { Col, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 import image from './rozvrhSnimek.png'
@@ -15,16 +15,16 @@ export function TeacherS(props) {
 
 export function TeacherM(props) {
     return (
-        <div class="card mb-3">
+        <div className="card mb-3">
             <Card.Header>
                 <Card.Title>Vyučující - <TeacherS {...props} /></Card.Title>
             </Card.Header>
             <Card.Body>
                 <Card.Text>
                     <b>Jméno příjmení:</b> {props.name} {props.lastname}<br/>
-                    <b>Titul:</b> {props.degreeRank ? props.degreeRank : 'mgr. npor.'}<br/>
-                    <b>Katedra:</b> {props.departments ? props.departments : <Link to={'404'}>K-209</Link>}<br/>
-                    <b>Fakulta:</b> {props.faculty ? props.faculty : <Link to={'404'}>FVZ</Link>}
+                    <b>Titul:</b> {props.degreeRank}<br/>
+                    <b>Katedra:</b> {props.departments}<br/>
+                    {/*<b>Fakulta:</b> {props.faculty}*/}
                 </Card.Text>
             </Card.Body>
         </div>
@@ -60,7 +60,7 @@ export function TeacherL(props) {
     )
 
     useEffect(()=>{
-        fetch('/api/getTeacher/', {
+        fetch('/gql/getTeacher/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export function TeacherL(props) {
     const subjects = []
     for(var index = 0; index < state.subjects.length; index++) {
         const sgItem = state.subjects[index]
-        subjects.push(<li><Link to={'404'}>{sgItem.name}</Link></li>);
+        subjects.push(<li key={sgItem.id}><Link to={'404'}>{sgItem.name}</Link></li>);
     }
 
     const departments = []
@@ -114,7 +114,7 @@ export function TeacherL(props) {
             departments.push(', ');
         }
         const sgItem = state.departments[index]
-        departments.push(<DepartmentS {...props} id={sgItem.id} name={sgItem.name} />);
+        departments.push(<DepartmentS {...props} id={sgItem.id} name={sgItem.name} key={sgItem.id}/>);
     }
 
     return (
@@ -122,18 +122,20 @@ export function TeacherL(props) {
             <div class="card-header mb-3">
                 <h4>Karta uživatele</h4>
             </div>
-            <Row>
-                <div class="col-3">
-                    <TeacherM {...props} degreeRank={state.degreeRank} departments={departments}/>
-                    <ContactInfo data={state}/>
-                </div>
-                <div class="col-6">
-                    <RozvrhM />
-                </div>
-                <div class="col-3">
-                    <SeznamPredmetu subjects={subjects} />
-                </div>
-            </Row>
+            <div class="col">
+                <Row>
+                    <div class="col-3">
+                        <TeacherM {...props} degreeRank={state.degreeRank} departments={departments}/>
+                        <ContactInfo data={state}/>
+                    </div>
+                    <div class="col-6">
+                        <RozvrhM />
+                    </div>
+                    <div class="col-3">
+                        <SeznamPredmetu subjects={subjects} />
+                    </div>
+                </Row>
+            </div>
         </div>
     )
 }

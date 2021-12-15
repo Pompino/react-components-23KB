@@ -2,61 +2,52 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { Card } from "react-bootstrap";
-import { TeacherS } from "../persons/Teacher";
-import { FacultyS } from "../faculty/Faculty";
+import { DepartmentS } from "../department/Department";
+import { PersonS } from "../persons/Person";
 
-export function DepartmentS (props) {
+export function FacultyS (props) {
     return (
-        <Link to={props.appRoot+"/department/"+props.id}>{props.name}</Link>
+        <Link to={props.appRoot+"/faculty/"+props.id}>{props.name}</Link>
     )
 }
 
-export function DepartmentM (props) {
+export function FacultyM (props) {
     return (
         <Card className='mb-3'>
             <Card.Header>
-                <Card.Title>Katedra <b><DepartmentS {...props} /></b></Card.Title>
+                <Card.Title>Fakulta <b><FacultyS {...props} /></b></Card.Title>
             </Card.Header>
             <Card.Body>
                 <b>Název:</b> {props.fullname}<br/>
-                <b>Vedoucí katedry:</b> {props.VK}<br/>
-                <b>Fakulta:</b> {props.faculty}<br/>
+                <b>Děkan:</b> {props.dean}<br/>
             </Card.Body>
         </Card> 
     )
 }
 
-export function DepartmentL (props) {
-
+export function FacultyL (props) {
     const [state, setState] = useState(
         {
             'id': props.id,
             'name': props.name,
-            'fullname': 'Katedra informatiky a kybernetických operací',
+            'fullname': 'Fakulta vojenských technologií',
+            'dean': 'Vladimír Brzobohatý',
             'areal': 'Kasárny Šumavská',
             'building': '3',
-            'faculty': [
-                {'id': 23, 'name': 'FVT'}
-            ],
-            'teachers': [
-                {'id': 1, 'name': 'Honza Bernard'},
-                {'id': 2, 'name': 'Pavel Motol'},
-                {'id': 3, 'name': 'Dominik Vaněk'},
-                {'id': 4, 'name': 'Andrea Svobodova'},
-                {'id': 5, 'name': 'Michal Mrkev'},
-                {'id': 6, 'name': 'Patrik Němý'},
-                {'id': 7, 'name': 'Jiřina Stará'},
-                {'id': 8, 'name': 'Petr Filip'},
-                {'id': 9, 'name': 'Jiří Grau'},
-                {'id': 10, 'name': 'Teodor Velký'},
-                {'id': 11, 'name': 'Alexandr Veliký'},
-                {'id': 22, 'name': 'Aleš Máchal'}
+            'departments': [
+                {'id': 1, 'name': 'K-201'},
+                {'id': 2, 'name': 'K-202'},
+                {'id': 3, 'name': 'K-205'},
+                {'id': 4, 'name': 'K-208'},
+                {'id': 5, 'name': 'K-209'},
+                {'id': 6, 'name': 'K-220'},
+                {'id': 7, 'name': 'K-221'},
             ]
         }
     )
 
         useEffect(()=>{
-        fetch('/gql/getDepartment/', {
+        fetch('/gql/getFaculty/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -75,7 +66,7 @@ export function DepartmentL (props) {
                             id
                             name
                         }
-                        teachers: groupsByType(type: 1) {
+                        departments: groupsByType(type: 1) {
                             id
                             name
                         }
@@ -90,43 +81,28 @@ export function DepartmentL (props) {
         .catch(error => console.log('error nacteni'))
     }, [props.id])
 
-    const teachers = []
-    for(var index = 0; index < state.teachers.length; index++) {
-        const sgItem = state.teachers[index]
-        teachers.push(<li key={sgItem.id}><TeacherS {...props} id={sgItem.id} name={sgItem.name} /></li>);
+    const departments = []
+    for(var index = 0; index < state.departments.length; index++) {
+        const sgItem = state.departments[index]
+        departments.push(<li key={sgItem.id}><DepartmentS {...props} id={sgItem.id} name={sgItem.name} /></li>);
     }
-
+    
     return (
         <div class="card w-50">
             <div class="card-header mb-3">
-                <h4>Karta katedry</h4>
+                <h4>Karta fakulty</h4>
             </div>
             <div class='col'>
                 <div class='row'>
                     <div class='col'>
-                        <DepartmentM {...props} fullname={state.fullname} faculty={<FacultyS {...props} name={state.faculty[0].name} id={state.faculty[0].id} /> }/>
+                        <FacultyM {...props} fullname={state.fullname} dean={<PersonS {...props} name={state.dean} />}/>
                         <ContactInfo data={state} appRoot={props.appRoot} />
                     </div>
                     <div class='col'>
-                        <SeznamUcitelu teachers={teachers}/>
+                        <SeznamKateder departments={departments} />
                     </div>
                 </div>
             </div>
-        </div>
-    )
-}
-
-function SeznamUcitelu(props) {
-    return (
-        <div class="card mb-3">
-            <Card.Header>
-                <Card.Title>Vyučující</Card.Title>
-            </Card.Header>
-            <Card.Body>
-                <ul>
-                    {props.teachers}
-                </ul>
-            </Card.Body>
         </div>
     )
 }
@@ -140,6 +116,21 @@ function ContactInfo(props) {
             <Card.Body>
                 <b>Areál: </b> {props.data.areal}<br />
                 <b>Budova: </b>{props.data.building} <br />
+            </Card.Body>
+        </div>
+    )
+}
+
+function SeznamKateder(props) {
+    return (
+        <div class="card mb-3">
+            <Card.Header>
+                <Card.Title>Katedry</Card.Title>
+            </Card.Header>
+            <Card.Body>
+                <ul>
+                    {props.departments}
+                </ul>
             </Card.Body>
         </div>
     )

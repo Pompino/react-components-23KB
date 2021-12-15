@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 
 import Card from 'react-bootstrap/Card';
-import { Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 import image from './rozvrhSnimek.png'
-import { StudentS } from "../persons/student";
+import { StudentS } from "../persons/Student";
 import { PersonS } from "../persons/Person";
 import { DepartmentS } from "../department/Department";
 
@@ -19,13 +18,14 @@ export function GroupM(props) {
     return (
         <Card className='mb-3'>
             <Card.Header>
-                <Card.Title>Skupina - <GroupS {...props}/></Card.Title>
+                <Card.Title>Skupina <b><GroupS {...props}/></b></Card.Title>
             </Card.Header>
             <Card.Body>
-                <b>Fakulta:</b> {props.faculties ? props.faculties : <Link to={'404'}> FVZ</Link>} <br/>
-                <b>Ročník:</b> {props.grade ? props.grade : '0'} <br/>
+                <b>Fakulta:</b> {props.faculties} <br/>
+                <b>Ročník:</b> {props.grade} <br/>
                 <b>Obor:</b> {props.specialization}<br/>
-                <b><Link to={'404'}>Harmonogram studia</Link></b> <br/>
+                <hr/>
+                <b><Link to={props.appRoot+"/MediumNULL"}>Harmonogram studia</Link></b> <br/>
             </Card.Body>
         </Card>
     )
@@ -70,7 +70,7 @@ export function GroupL(props) {
     )
 
     useEffect(()=>{
-        fetch('/api/getStudent/', {
+        fetch('/gql/getStudent/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -114,20 +114,20 @@ export function GroupL(props) {
     const subjects = []
     for(var index = 0; index < state.subjects.length; index++) {
         const sgItem = state.subjects[index]
-        subjects.push(<li><Link to={'404'}>{sgItem.name}</Link></li>);
+        subjects.push(<li key={sgItem.id}><Link to={'404'}>{sgItem.name}</Link></li>);
     }
     
     const faculties = []
     for(index = 0; index < state.faculty.length; index++) {
         if(index>0) faculties.push(', ')
         const sgItem = state.faculty[index]
-        faculties.push(<DepartmentS {...props} id={sgItem.id} name={sgItem.name} />);
+        faculties.push(<DepartmentS {...props} id={sgItem.id} name={sgItem.name} key={sgItem.id}/>);
     }
 
     const students = []
-    for(var index = 0; index < state.students.length; index++) {
+    for(index = 0; index < state.students.length; index++) {
         const sgItem = state.students[index]
-        students.push(<li><StudentS {...props} id={sgItem.id} name={sgItem.name} /></li>);
+        students.push(<li key={sgItem.id}><StudentS {...props} id={sgItem.id} name={sgItem.name} /></li>);
     }
 
     return (
@@ -135,22 +135,24 @@ export function GroupL(props) {
             <div class="card-header mb-3">
                 <h4>Karta učební skupiny</h4>
             </div>
-            <Row>
-                <div class="col-3">
-                    <GroupM {...props} grade={state.grade} specialization={state.specialization} faculties={faculties}/>
-                    <ContactInfo appRoot={props.appRoot} />
+            <div class="col">
+                <div class='row'>
+                    <div class="col-3">
+                        <GroupM {...props} grade={state.grade} specialization={state.specialization} faculties={faculties}/>
+                        <ContactInfo appRoot={props.appRoot} />
 
+                    </div>
+                    <div class="col-2">
+                        <SeznamStudentu students={students} />
+                    </div>
+                    <div class="col-5">
+                        <RozvrhM />
+                    </div>
+                    <div class="col-2">
+                        <SeznamPredmetu subjects={subjects} />
+                    </div>
                 </div>
-                <div class="col-2">
-                    <SeznamStudentu students={students} />
-                </div>
-                <div class="col-5">
-                    <RozvrhM />
-                </div>
-                <div class="col-2">
-                    <SeznamPredmetu subjects={subjects} />
-                </div>
-            </Row>
+            </div>
         </div>
     )
 }
