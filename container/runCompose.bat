@@ -1,4 +1,4 @@
 set COMPOSE_CONVERT_WINDOWS_PATHS=1
-docker-compose -p components up -d --build
+docker-compose -p app2 up -d --build
 pause
-docker-compose -p components down
+docker-compose -p app2 down

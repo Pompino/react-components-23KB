@@ -5,15 +5,15 @@ import {
   useParams
 } from "react-router-dom";
 
-import { StudentL } from "./entities/persons/Student";
-import { TeacherL } from "./entities/persons/Teacher";
-import { GroupL } from "./entities/group/Group";
-import { DepartmentL } from "./entities/department/Department"
+import { StudentL, StudentPage } from "./entities/persons/Student";
+import { TeacherL, TeacherPage } from "./entities/persons/Teacher";
+import { GroupL, GroupPage } from "./entities/group/Group";
+import { DepartmentL, DepartmentPage } from "./entities/department/Department"
 
 import Home from "./Home";
 import Prehled from "./Prehled";
 import { PersonL } from "./entities/persons/Person";
-import { FacultyL } from "./entities/faculty/Faculty";
+import { FacultyL, FacultyPage } from "./entities/faculty/Faculty";
 
 
 function Separate(props) {
@@ -21,19 +21,19 @@ function Separate(props) {
   const {type}=useParams();
 
   if(type==='student') {
-    return (<StudentL id={id} name={'Josef'} lastname={'Vrba'} appRoot={props.appRoot}/>)
+    return (<StudentPage id={id} name={'Josef'} lastname={'Vrba'} appRoot={props.appRoot}/>)
   }
   else if(type==='group') {
-    return (<GroupL id={id} name={'23-5KB'} appRoot={props.appRoot}/>)
+    return (<GroupPage id={id} name={'23-5KB'} appRoot={props.appRoot}/>)
   }
   else if (type==='department') {
-    return (<DepartmentL id={id} name={'K-209'} appRoot={props.appRoot} />)
+    return (<DepartmentPage id={id} name={'K-209'} appRoot={props.appRoot} />)
   }
   else if (type==='teacher') {
-    return (<TeacherL id={id} name={'Jan'} lastname={'Kolomaz'} appRoot={props.appRoot} />)
+    return (<TeacherPage id={id} name={'Jan'} lastname={'Kolomaz'} appRoot={props.appRoot} />)
   }
   else if (type==='faculty') {
-    return (<FacultyL id={id} name={'FVK'} appRoot={props.appRoot}/>)
+    return (<FacultyPage id={id} name={'FVK'} appRoot={props.appRoot}/>)
   }
 }
 
