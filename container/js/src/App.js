@@ -48,7 +48,7 @@ export default function App(props) {
   return (
     <Router>
       <Routes>
-        <Route path={'/'} element={<Home appRoot={props.appRoot} />} />
+        <Route path={props.appRoot} element={<Home appRoot={props.appRoot} />} />
         <Route path={props.appRoot + '/:type/:id'} element={<Separate appRoot={props.appRoot} />} />
         <Route path={props.appRoot + '/prehled'} element={<Prehled appRoot={props.appRoot} />} />
         <Route path={props.appRoot + '/person/:id'} element={<BasicPerson appRoot={props.appRoot} />} />
